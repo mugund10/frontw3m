@@ -1,6 +1,10 @@
 import React, { Fragment } from "react";
 import { Base64 } from "js-base64";
 import { BsPlusCircle } from "react-icons/bs";
+import { useState, useRef } from "react";
+import { ethers } from "ethers";
+//import ErrorMessage from "./ErrorMessage";
+import SignMessage from "./SignMessage";
 import {
   Button,
   Modal,
@@ -16,10 +20,58 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/core";
+import { black } from "tailwindcss/colors";
+
+const signMessage = async ({ setError, message }) => {
+  try {
+    console.log({ message });
+    if (!window.ethereum)
+      throw new Error("No crypto wallet found. Please install it.");
+
+    await window.ethereum.send("eth_requestAccounts");
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const signature = await signer.signMessage(message);
+    const address = await signer.getAddress();
+
+    return {
+      message,
+      signature,
+      address
+    };
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
 const SendModel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+
+  const resultBox = useRef();
+  const [signatures, setSignatures] = useState([]);
+  const [error, setError] = useState();
+  const [message, setMessage] = useState()
+
+  const handleSign = async (e) => {
+    e.preventDefault();
+    // const data = new FormData(e.target);
+    console.log("data", message)
+    setError();
+    const sig = await signMessage({
+      setError,
+      message
+    });
+    if (sig) {
+      setSignatures([...signatures, sig]);
+    }
+  };
+  
+  const onChange = (e) => {
+    const { name, value } = e.target
+    setMessage(value)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,35 +167,89 @@ const SendModel = () => {
               </FormControl>
               <FormControl isRequired>
                 <Input
+                  colour='black'
                   type='text'
                   id='subject'
                   placeholder='Subject'
                   aria-describedby='subject-email-helper-text'
                 />
               </FormControl>
+
               <FormControl isRequired>
                 <Textarea
+                  // id='message'
+                  minH='280px'
+                  size='xl'
+                  placeholder="Message"
+                  value={message}
+                  onChange={onChange}
+                  aria-describedby='subject-email-helper-text'
+                  // resize='vertical'
+                />
+              </FormControl>
+
+             
+                {/* <Textarea
                   id='message'
                   minH='280px'
                   size='xl'
                   resize='vertical'
+                  
+                /> */}
+                {/* <SignMessage id='message' /> */}
+
+                {signatures.map((sig, idx) => {
+          return (
+            <div className="p-2" key={sig}>
+              <div className="my-3">
+                {/* <p>
+                  Message {idx + 1}: {sig.message}
+                </p>
+                <p>Signer: {sig.address}</p> */}
+                <textarea
+                
+                  type="text"
+                  readOnly
+                  ref={resultBox}
+                  className="textarea w-full h-24 textarea-bordered focus:ring focus:outline-none"
+                  placeholder="Generated signature"
+                  value={sig.signature}
                 />
-              </FormControl>
+              </div>
+            </div>
+          );
+        })}
+              
+
+              
+                
+              
             </ModalBody>
 
             <ModalFooter>
               <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button type='submit' variantColor='green'>
+              {/* <Button type='submit' variantColor='green'>
                 Send
-              </Button>
+              </Button> */}
+              <Button type='submit' variantColor='green'
+            onClick={handleSign}
+            // className="btn btn-primary submit-button focus:ring focus:outline-none w-full"
+          >
+            Sign message
+          </Button>
+              
             </ModalFooter>
           </form>
         </ModalContent>
       </Modal>
     </Fragment>
   );
+
+  
+
 };
+
 
 export default SendModel;
