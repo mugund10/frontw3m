@@ -6,6 +6,9 @@ import tw from "twin.macro";
 import logo from "images/logo.svg";
 import { Button, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useHistory } from "react-router-dom";
+
+
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -15,6 +18,7 @@ const LogoImage = tw.img`h-12 mx-auto`;
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 
+
 export default ({
   logoLinkUrl = "#",
   headingText = "WELCOME ",
@@ -22,6 +26,8 @@ export default ({
 	address: "",
 	Balance: null,
 });
+
+const history = useHistory()
 
 // Button handler button for handling a
 // request event for metamask
@@ -58,8 +64,13 @@ const getbalance = (address) => {
 		setdata((prev) => ({
 			...prev,
 			Balance: ethers.utils.formatEther(balance)
+      
 		}))
 	});
+  
+forward()
+ 
+  
 };
 
 // Function for getting handling all events
@@ -75,9 +86,14 @@ const accountChangeHandler = (account) => {
 	}))
 	// Setting a balance
 	getbalance(account);
+
 };
 
-
+const forward = () => {
+  if (data?.address?.length > 0){
+    history.push('/appp')
+  }
+}
 
 return (
 
@@ -102,7 +118,11 @@ return (
 		<Button onClick={btnhandler} variant="primary">
 			{ data.address.length > 0 ? "Connected" : "Connect" }
 		</Button>
-		
+    
+      
+    
+
+    		
 	
 	</div>        
             

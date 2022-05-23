@@ -8,7 +8,7 @@ import illustration from "images/login-illustration.svg";
 import logo from "images/logo.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { useHistory } from "react-router-dom";
-import axios from "axios"
+//import axios from "axios"
 
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
@@ -133,7 +133,7 @@ export default ({
 
   async function login(){
     let item={email,password};
-    let result = await fetch("http://35.86.88.48:8080/api/v1/signin",{
+    let result = await fetch("http://34.220.125.123:8080/api/v1/signin",{
       method: "POST",
       // headers: {
       //   "Content-Type": "application/json",
