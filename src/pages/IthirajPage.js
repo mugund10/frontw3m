@@ -90,9 +90,9 @@ const accountChangeHandler = (account) => {
 };
 
 const forward = () => {
-  if (data?.address?.length > 0){
+  
     history.push('/appp')
-  }
+  
 }
 
 return (

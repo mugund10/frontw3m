@@ -175,12 +175,12 @@ export default ({
                 <Input type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
                 <Input type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} />
                 
-                <button onClick={login} className="btn btn-primary">SignIn</button>
+                {/* <button onClick={login} className="btn btn-primary">SignIn</button> */}
                 
-                {/* <SubmitButton type="submit" onClick={login}>
+                <SubmitButton type="submit" onClick={login}>
                   <SubmitButtonIcon className="icon" />
                   <span className="text">{submitButtonText}</span>
-                </SubmitButton> */}
+                </SubmitButton>
 
 
               </Form>

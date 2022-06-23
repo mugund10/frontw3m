@@ -26,7 +26,7 @@ const Main = () => {
       bg='#3C0D99'
       color='white'
     >
-      <MailboxList />
+      <MailboxList /> 
       <EmailList />
       <Email />
     </Flex>

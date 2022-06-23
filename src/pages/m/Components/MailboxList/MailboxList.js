@@ -61,7 +61,7 @@ const MailboxList = () => {
             w='100%'
             h='45px'
             py={2}
-            pl={8}
+            pl={8}New Message
             leftIcon={MdStar}
             variantColor='teal'
             variant={active === "STARRED" ? "solid" : "ghost"}
