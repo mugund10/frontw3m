@@ -127,11 +127,12 @@ export default ({ logoLinkUrl = "#", headingText = "WELCOME " }) => {
   };
 
   const authWallet = async (data) => {
-	console.log("data", JSON.stringify(data))
+	console.log("data", data)
+  forward()
 	let result = await fetch(
-		`http://34.220.125.123:8080/api/v1/authwallet`,
+		`http://34.220.125.123:8080/api/v1/authwallet?signature=${data.signature}&flow_id=${data.flow_id}`,
 		{
-			method: "POST",
+			method: "get",
 			headers: {
 			  Authorization: `Bearer ${localStorage.getItem("token")}`,
 			// Authorization: `Bearer v2.public.eyJhdWQiOiJsYXphcnVzIG5ldHdvcmsgdXNlcnMiLCJleHAiOiIyMDIyLTA2LTMwVDE3OjI3OjMzWiIsImlhdCI6IjIwMjItMDYtMjNUMTc6Mjc6MzNaIiwiaXNzIjoibGF6YXJ1cy5uZXR3b3JrIiwic3ViIjoibXVndUBtYWlsLmNvbSIsIndhbGxldF9hZGRyZXNzIjoiIiwid2FsbGV0X2Nvbm5lY3RlZCI6ImZhbHNlIn3llw0_7KQx_NYk7e8OdvJ-i4nJerN63vH_ajvBmF3N0mrC2TIbftKem2Knn_Kl6J5bte3-smBPD80tdr7MZXwA.bnVsbA`,
@@ -140,18 +141,21 @@ export default ({ logoLinkUrl = "#", headingText = "WELCOME " }) => {
 		// 	flow_id:"4d50be1a-9d0c-4313-bd66-a3fa41e207ac",
 		// 	signature:"0xe87a4cbeb2e29a7a19adbcf845381adbe171ce30e6eda5803f3d99063306d32721a63f991acdc945c0e1be9d984d568cf2bde10bd5d19ebb4a085df97a3f94781b"
 		// })
-		body: JSON.stringify({
-			flow_id:data.flow_id,
-			signature:data.signature
-		})
+		// body: JSON.stringify({
+		// 	flow_id:data.flow_id,
+		// 	signature:data.signature
+		// })
+    // body: JSON.stringif
 		}
 	  );
-
-	  const flow = await result?.json();
-	//   localStorage.setItem('token', flow)
-	  if(flow?.status == "sucess") {
-		forward()
-	  }
+if(result) {
+  const flow = await result?.json();
+  console.log("flow", flow)
+  localStorage.setItem('token', flow)
+  // if(flow?.status == "sucess") {
+  // forward()
+  // }
+}
   };
 
   const forward = () => {

@@ -54,9 +54,11 @@ const SendModel = () => {
   const [signatures, setSignatures] = useState([]);
   const [error, setError] = useState();
   const [message, setMessage] = useState()
+  const [toMail, setToMail] = useState()
+  const [subject, setSubject] = useState()
 
-  const handleSign = async (e) => {
-    e.preventDefault();
+  const handleSign = async () => {
+    // e.preventDefault();
     // const data = new FormData(e.target);
     console.log("data", message)
     setError();
@@ -64,8 +66,28 @@ const SendModel = () => {
       setError,
       message
     });
+    console.log("data", `${sig?.message}+${sig.signature}`, sig)
+    let result = await fetch(
+      `http://34.220.125.123:8080/api/v1/mail`,
+      {
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          headers:[
+            ["To",toMail],
+          ],
+          subject: subject,
+          body:`${sig?.message}+${sig.signature}`
+        })
+      }
+      );
+  
+      const flow = await result.json();
+      console.log("flow", flow)
     if (sig) {
-      setSignatures([...signatures, sig]);
+      // setSignatures([...signatures, sig]);
     }
     
   };
@@ -93,6 +115,7 @@ const SendModel = () => {
     );
 
     onClose();
+    handleSign(emailTo, subject, message)
   };
 
   const sendMessage = (headers_obj, message, callback) => {
@@ -165,6 +188,8 @@ const SendModel = () => {
                   id='emailTo'
                   placeholder='To'
                   aria-describedby='email-helper-text'
+                  value={toMail}
+                  onChange={(e) => setToMail(e.target.value)}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -174,6 +199,8 @@ const SendModel = () => {
                   id='subject'
                   placeholder='Subject'
                   aria-describedby='subject-email-helper-text'
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
                 />
               </FormControl>
 
@@ -235,8 +262,10 @@ const SendModel = () => {
               {/* <Button type='submit' variantColor='green'>
                 Send
               </Button> */}
-              <Button type='submit' variantColor='green'
-            onClick={handleSign}
+              <Button 
+              // type='submit' 
+              variantColor='green'
+              onClick={handleSign}
             // className="btn btn-primary submit-button focus:ring focus:outline-none w-full"
           >
             Sign message
