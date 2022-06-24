@@ -142,15 +142,13 @@ export default ({
       body: JSON.stringify(item)
 
     });
-       console.log(result)
+       console.log("before", result)
        result = await result.json();
-       console.log(result)
-    // localStorage.setItem("user-info",JSON.stringify(result))
-    if (result?.payload?.token?.length > 0){
-      history.push('\ithi')
-    }
-    // console.log(email,password)
-
+       console.log("after", result.payload.token)
+       localStorage.setItem('token', result.payload.token)
+      if (result?.payload?.token?.length > 0){
+        history.push('\ithi')
+      }
   }
 
   return(<AnimationRevealPage>

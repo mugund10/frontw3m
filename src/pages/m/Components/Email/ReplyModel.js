@@ -107,7 +107,7 @@ const ReplyModel = ({ replayData }) => {
               <Input
                 type='hidden'
                 id='reply-message-id'
-                value={replayData.msgId}
+                // value={replayData.msgId}
                 readOnly
               />
               <FormControl isRequired>
@@ -116,7 +116,7 @@ const ReplyModel = ({ replayData }) => {
                   id='emailTo'
                   placeholder='To'
                   aria-describedby='email-helper-text'
-                  value={replayData.to}
+                  // value={replayData.to}
                   readOnly
                 />
               </FormControl>
@@ -126,7 +126,7 @@ const ReplyModel = ({ replayData }) => {
                   id='subject'
                   placeholder='Subject'
                   aria-describedby='subject-email-helper-text'
-                  value={replayData.subject}
+                  // value={replayData.subject}
                   readOnly
                 />
               </FormControl>

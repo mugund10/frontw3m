@@ -201,25 +201,25 @@ const SendModel = () => {
                 {/* <SignMessage id='message' /> */}
 
                 {signatures.map((sig, idx) => {
-          // return (
-          //   <div className="p-2" key={sig}>
-          //     <div className="my-3">
-          //       {/* <p>
-          //         Message {idx + 1}: {sig.message}
-          //       </p>
-          //       <p>Signer: {sig.address}</p> */}
-          //       {/* <textarea
+          return (
+            <div className="p-2" key={sig}>
+              <div className="my-3">
+                <p>
+                  Message {idx + 1}: {sig.message}
+                </p>
+                <p>Signer: {sig.address}</p>
+                <textarea
                 
-          //         type="text"
-          //         readOnly
-          //         ref={resultBox}
-          //         className="textarea w-full h-24 textarea-bordered focus:ring focus:outline-none"
-          //         placeholder="Generated signature"
-          //         value={sig.signature}
-          //       /> */}
-          //     </div>
-          //   </div>
-          // );
+                  type="text"
+                  readOnly
+                  ref={resultBox}
+                  className="textarea w-full h-24 textarea-bordered focus:ring focus:outline-none"
+                  placeholder="Generated signature"
+                  value={sig.signature}
+                />
+              </div>
+            </div>
+          );
         })}
               
 

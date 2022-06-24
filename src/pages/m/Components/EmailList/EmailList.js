@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Flex, Box, Spinner } from "@chakra-ui/core";
 
-const Messages = () => {
+const Messages = ({mailList, setSelMail}) => {
   const {
     messages,
     getOneMessage,
@@ -15,11 +15,12 @@ const Messages = () => {
     loadMoreMessages,
   } = useContext(EmailContext);
 
-  const handleMessageClick = (e) => {
-    const messageId = e.currentTarget.getAttribute("id");
-    getOneMessage(messageId);
+  const handleMessageClick = (data) => {
+    // const messageId = e.currentTarget.getAttribute("id");
+    // getOneMessage(messageId);
+    setSelMail(data)
   };
-
+console.log("mail data", mailList)
   return (
     <Box overflowY='auto' id='scrollableDiv'>
       <InfiniteScroll
@@ -29,7 +30,7 @@ const Messages = () => {
         // loader={<h4>Loading...</h4>}
         scrollableTarget='scrollableDiv'
       >
-        {messages.map((message, index) => (
+        {mailList.map((message, index) => (
           <EmailRow
             key={index}
             message={message}
@@ -53,8 +54,8 @@ const CustomSpinner = () => (
   </Box>
 );
 
-const EmailList = () => {
-  const { messages, loading } = useContext(EmailContext);
+const EmailList = ({mailList, setSelMail}) => {
+  // const { messages, loading } = useContext(EmailContext);
 
   return (
     <Flex
@@ -69,8 +70,8 @@ const EmailList = () => {
       <SearchBar />
 
       {/* Messages */}
-      <Messages />
-      {/* {!messages.length && loading ? <CustomSpinner /> : <Messages />} */}
+      <Messages setSelMail={setSelMail} mailList={mailList}/>
+      {/* {!mailList.length ? <CustomSpinner /> : <Messages />} */}
     </Flex>
   );
 };

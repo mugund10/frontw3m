@@ -123,7 +123,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
                   id='subject'
                   placeholder='Subject'
                   aria-describedby='subject-email-helper-text'
-                  value={getHeader(forwardData.payload.headers, "Subject")}
+                  // value={getHeader(forwardData.payload.headers, "Subject")}
                   readOnly
                 />
               </FormControl>
@@ -133,10 +133,10 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
                   minH='280px'
                   size='xl'
                   resize='vertical'
-                  value={
-                    "------Forward Message------\r\n" +
-                    getForwardHead(forwardData.payload.headers)
-                  }
+                  // value={
+                  //   "------Forward Message------\r\n" +
+                  //   getForwardHead(forwardData.payload.headers)
+                  // }
                   readOnly
                 />
               </FormControl>

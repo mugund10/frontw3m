@@ -75,7 +75,7 @@ export default function SignMessage() {
             onClick={handleSign}
             className="btn btn-primary submit-button focus:ring focus:outline-none w-full"
           >
-            Sign message
+            Sign messages
           </button>
           <ErrorMessage message={error} />
         </footer>
